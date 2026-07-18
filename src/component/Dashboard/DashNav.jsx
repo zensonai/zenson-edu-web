@@ -16,6 +16,7 @@ const DashNav = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [myprofile, setMyProfile] = useState(null);
 
     const dropdownRef = useRef(null);
 
@@ -42,6 +43,30 @@ const DashNav = () => {
             localStorage.removeItem("refresh_token")
         }
     }
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const res = await API.get('/profile/profile-data', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (res.data.success) {
+                    setMyProfile(res.data.result);
+                }
+
+            } catch (err) {
+                console.log(err.response?.data || err.message);
+            }
+        };
+
+        if (token) {
+            fetchProfile();
+        }
+
+    }, [token]);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -110,9 +135,13 @@ const DashNav = () => {
                                 className="ml-2 flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 transition"
                             >
                                 <img
-                                    src={defultUser}
+                                    src={
+                                        myprofile?.profle_img
+                                            ? `${import.meta.env.VITE_APP_API_FILES}/uploads/profile/${myprofile.profle_img}`
+                                            : defultUser
+                                    }
                                     alt="Profile"
-                                    className="w-10 h-10"
+                                    className="w-10 h-10 rounded-full object-cover"
                                 />
                             </button>
 
@@ -129,9 +158,13 @@ const DashNav = () => {
                                         <div className="flex items-center gap-3 p-4 border-b border-indigo-100">
                                             <div className="relative">
                                                 <img
-                                                    src={defultUser}
+                                                    src={
+                                                        myprofile?.profle_img
+                                                            ? `${import.meta.env.VITE_APP_API_FILES}/uploads/profile/${myprofile?.profle_img}`
+                                                            : defultUser
+                                                    }
                                                     alt="User"
-                                                    className="w-12 h-12 rounded-full border-2 border-indigo-100"
+                                                    className="w-12 h-12 rounded-full border-2 border-indigo-100 object-cover"
                                                 />
                                                 {/* Online indicator */}
                                                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full animate-pulse"></span>
@@ -154,7 +187,7 @@ const DashNav = () => {
                                         {/* QUICK ACTIONS */}
                                         <div className="py-2 px-2 grid grid-cols-2 gap-2 border-b border-indigo-100">
                                             <Link
-                                                to="/Dashboard/settings/account"
+                                                to="/Dashboard/my-profile"
                                                 className="flex items-center justify-center gap-2 px-2 py-2 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition text-sm font-medium"
                                             >
                                                 <FiUser className="w-4 h-4" />

@@ -8,13 +8,15 @@ import defaultUser from "../../assets/User.png";
 import { useAuth } from "../../context/AuthContext";
 import { menus } from "./menus";
 import { MdSchool } from "react-icons/md";
+import API from "../../services/api";
 
 const DashSide = ({ closeSidebar }) => {
     const { auth } = useAuth();
     const location = useLocation();
+    const token = localStorage.getItem('access_token')
 
     const [openMenu, setOpenMenu] = useState(null);
-
+    const [myprofile, setMyProfile] = useState(null);
     const sections = menus[auth?.role] || [];
 
     useEffect(() => {
@@ -34,6 +36,31 @@ const DashSide = ({ closeSidebar }) => {
     const toggleMenu = (name) => {
         setOpenMenu((prev) => (prev === name ? null : name));
     };
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const res = await API.get('/profile/profile-data', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+
+                if (res.data.success) {
+                    setMyProfile(res.data.result);
+                }
+
+            } catch (err) {
+                console.log(err.response?.data || err.message);
+            }
+        };
+
+        if (token) {
+            fetchProfile();
+        }
+
+    }, [token]);
 
     return (
         <aside className="h-screen w-72 bg-white border-r border-indigo-100 flex flex-col px-4 py-5">
@@ -88,11 +115,10 @@ const DashSide = ({ closeSidebar }) => {
                                                     onClick={() =>
                                                         toggleMenu(item.name)
                                                     }
-                                                    className={`relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${
-                                                        isOpen
-                                                            ? "bg-indigo-50 text-indigo-600"
-                                                            : "text-gray-500 hover:bg-gray-100"
-                                                    }`}
+                                                    className={`relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition ${isOpen
+                                                        ? "bg-indigo-50 text-indigo-600"
+                                                        : "text-gray-500 hover:bg-gray-100"
+                                                        }`}
                                                 >
 
                                                     {isOpen && (
@@ -113,11 +139,10 @@ const DashSide = ({ closeSidebar }) => {
 
 
                                                     <ChevronDown
-                                                        className={`w-4 h-4 transition-transform ${
-                                                            isOpen
-                                                                ? "rotate-180"
-                                                                : ""
-                                                        }`}
+                                                        className={`w-4 h-4 transition-transform ${isOpen
+                                                            ? "rotate-180"
+                                                            : ""
+                                                            }`}
                                                     />
 
                                                 </button>
@@ -147,11 +172,10 @@ const DashSide = ({ closeSidebar }) => {
                                                                         key={sub.link}
                                                                         to={sub.link}
                                                                         onClick={closeSidebar}
-                                                                        className={({isActive}) =>
-                                                                            `block px-3 py-1.5 rounded-md text-sm transition ${
-                                                                                isActive
-                                                                                    ? "text-indigo-600 font-medium"
-                                                                                    : "text-gray-500 hover:text-indigo-600"
+                                                                        className={({ isActive }) =>
+                                                                            `block px-3 py-1.5 rounded-md text-sm transition ${isActive
+                                                                                ? "text-indigo-600 font-medium"
+                                                                                : "text-gray-500 hover:text-indigo-600"
                                                                             }`
                                                                         }
                                                                     >
@@ -171,16 +195,15 @@ const DashSide = ({ closeSidebar }) => {
                                             <NavLink
                                                 to={item.link}
                                                 onClick={closeSidebar}
-                                                className={({isActive}) =>
-                                                    `relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition ${
-                                                        isActive
-                                                            ? "bg-indigo-50 text-indigo-600"
-                                                            : "text-gray-500 hover:bg-gray-100"
+                                                className={({ isActive }) =>
+                                                    `relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition ${isActive
+                                                        ? "bg-indigo-50 text-indigo-600"
+                                                        : "text-gray-500 hover:bg-gray-100"
                                                     }`
                                                 }
                                             >
 
-                                                {({isActive}) => (
+                                                {({ isActive }) => (
                                                     <>
                                                         {isActive && (
                                                             <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 bg-indigo-600 rounded-r" />
@@ -215,9 +238,13 @@ const DashSide = ({ closeSidebar }) => {
                 <div className="flex items-center gap-3 p-3 rounded-xl border border-gray-200">
 
                     <img
-                        src={defaultUser}
+                        src={
+                            myprofile?.profle_img
+                                ? `${import.meta.env.VITE_APP_API_FILES}/uploads/profile/${myprofile.profle_img}`
+                                : defaultUser
+                        }
                         alt="User"
-                        className="w-10 h-10 rounded-full"
+                        className="w-10 h-10 rounded-full object-cover"
                     />
 
                     <div className="flex-1 min-w-0">

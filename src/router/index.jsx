@@ -8,6 +8,7 @@ import Login from '../pages/auth/Login'
 import Unauthorized from './Unauthorized'
 import PrivateRoute from './PrivateRoute'
 import DashHome from '../pages/dashboards/DashHome'
+import MyProfile from '../pages/profiles/MyProfile'
 
 
 function App() {
@@ -23,9 +24,11 @@ function App() {
 
                 <Route path='/dashboard/' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><Dashboard /></PrivateRoute>}>
                     <Route path='*' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><DashError /></PrivateRoute>}/>
-
                     
                     <Route index element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><DashHome /></PrivateRoute>}/>
+
+                    <Route path='my-profile' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><MyProfile /></PrivateRoute>}/>
+
 
                 </Route>
 
