@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import API from '../../services/api'
 import UpdateProfile from './UpdateProfile'
+import UpdatePassword from './UpdatePassword'
+
 
 const MyProfile = () => {
     const token = localStorage.getItem('access_token')
@@ -124,7 +126,7 @@ const MyProfile = () => {
                             }
 
                             if (updtemenu === "update_password") {
-                                return "<UpdatePassword />";
+                                return <UpdatePassword token={token} />;
                             }
 
                             return (

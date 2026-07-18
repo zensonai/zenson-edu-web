@@ -77,7 +77,7 @@ const UpdateProfile = ({ profiledata, token }) => {
             }
 
         } catch (err) {
-            console.log(err.response?.data);
+            // console.log(err.response?.data);
             setToast({
                 success: false,
                 message: err.response?.data?.message || "Something went wrong",

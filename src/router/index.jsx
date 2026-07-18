@@ -9,6 +9,8 @@ import Unauthorized from './Unauthorized'
 import PrivateRoute from './PrivateRoute'
 import DashHome from '../pages/dashboards/DashHome'
 import MyProfile from '../pages/profiles/MyProfile'
+import Users from '../pages/superAdmin/plaftfrom/Users'
+import ViewUser from '../pages/superAdmin/plaftfrom/ViewUser'
 
 
 function App() {
@@ -24,10 +26,12 @@ function App() {
 
                 <Route path='/dashboard/' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><Dashboard /></PrivateRoute>}>
                     <Route path='*' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><DashError /></PrivateRoute>}/>
-                    
                     <Route index element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><DashHome /></PrivateRoute>}/>
-
                     <Route path='my-profile' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student', 'parent']} ><MyProfile /></PrivateRoute>}/>
+
+                    {/* superAdmin */}
+                    <Route path='platfrom-users' element={<PrivateRoute roles={['super_admin']} ><Users /></PrivateRoute>}/>
+                    <Route path='platfrom-user/:id' element={<PrivateRoute roles={['super_admin']} ><ViewUser /></PrivateRoute>}/>
 
 
                 </Route>
@@ -39,3 +43,4 @@ function App() {
 }
 
 export default App
+
