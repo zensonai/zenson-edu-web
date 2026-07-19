@@ -16,6 +16,7 @@ import AuditLogs from '../pages/superAdmin/security/AuditLogs'
 import LoginHistory from '../pages/superAdmin/security/LoginHistory'
 import UserAuditLog from '../pages/superAdmin/security/UserAuditLog'
 import CreatePlan from '../pages/superAdmin/plan/CreatePlan'
+import Plans from '../pages/superAdmin/plan/Plans'
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
                     <Route path='security/user-auditlog/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><UserAuditLog /></PrivateRoute>}/>
 
                     <Route path='plan/create' element={<PrivateRoute roles={['super_admin']} ><CreatePlan /></PrivateRoute>}/>
+                    <Route path='plans' element={<PrivateRoute roles={['super_admin']} ><Plans /></PrivateRoute>}/>
 
 
 
