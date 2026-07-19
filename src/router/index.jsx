@@ -15,6 +15,7 @@ import CreateUser from '../pages/superAdmin/plaftfrom/CreateUser'
 import AuditLogs from '../pages/superAdmin/security/AuditLogs'
 import LoginHistory from '../pages/superAdmin/security/LoginHistory'
 import UserAuditLog from '../pages/superAdmin/security/UserAuditLog'
+import CreatePlan from '../pages/superAdmin/plan/CreatePlan'
 
 
 function App() {
@@ -41,6 +42,9 @@ function App() {
                     <Route path='security/audit-logs' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><AuditLogs /></PrivateRoute>}/>
                     <Route path='security/login-history' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><LoginHistory /></PrivateRoute>}/>
                     <Route path='security/user-auditlog/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><UserAuditLog /></PrivateRoute>}/>
+
+                    <Route path='plan/create' element={<PrivateRoute roles={['super_admin']} ><CreatePlan /></PrivateRoute>}/>
+
 
 
                 </Route>
