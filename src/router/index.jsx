@@ -11,6 +11,10 @@ import DashHome from '../pages/dashboards/DashHome'
 import MyProfile from '../pages/profiles/MyProfile'
 import Users from '../pages/superAdmin/plaftfrom/Users'
 import ViewUser from '../pages/superAdmin/plaftfrom/ViewUser'
+import CreateUser from '../pages/superAdmin/plaftfrom/CreateUser'
+import AuditLogs from '../pages/superAdmin/security/AuditLogs'
+import LoginHistory from '../pages/superAdmin/security/LoginHistory'
+import UserAuditLog from '../pages/superAdmin/security/UserAuditLog'
 
 
 function App() {
@@ -32,6 +36,11 @@ function App() {
                     {/* superAdmin */}
                     <Route path='platfrom-users' element={<PrivateRoute roles={['super_admin']} ><Users /></PrivateRoute>}/>
                     <Route path='platfrom-user/:id' element={<PrivateRoute roles={['super_admin']} ><ViewUser /></PrivateRoute>}/>
+                    <Route path='user/create' element={<PrivateRoute roles={['super_admin']} ><CreateUser /></PrivateRoute>}/>
+
+                    <Route path='security/audit-logs' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><AuditLogs /></PrivateRoute>}/>
+                    <Route path='security/login-history' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><LoginHistory /></PrivateRoute>}/>
+                    <Route path='security/user-auditlog/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><UserAuditLog /></PrivateRoute>}/>
 
 
                 </Route>

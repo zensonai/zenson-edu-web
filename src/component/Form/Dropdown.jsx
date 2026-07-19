@@ -16,7 +16,7 @@ const Dropdown = ({ label, name, onChange, required = false, options = [] }) => 
                 name={name}
                 onChange={onChange}
                 required={required}
-                className="w-full px-4 py-2 rounded border border-gray-300 bg-white text-gray-900 placeholder-gray-400
+                className="w-full px-4 py-3 rounded border border-gray-300 bg-white text-gray-900 placeholder-gray-400
                            focus:outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-300/40
                            hover:border-gray-300
                            transition-all duration-200 shadow-sm hover:shadow-md"

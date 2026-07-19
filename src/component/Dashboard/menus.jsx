@@ -101,7 +101,7 @@ export const superAdminMenu = [
                     },
                     {
                         name: "Create Platform user",
-                        link: "/dashboard/platfrom-user/create",
+                        link: "/dashboard/user/create",
                     },
                 ],
             },
@@ -129,7 +129,7 @@ export const superAdminMenu = [
 ];
 
 
-export const systemAdminMenu = [
+export const instituteAdmin = [
     {
         section: "Main",
         items: [
@@ -152,20 +152,6 @@ export const systemAdminMenu = [
                         link: "/dashboard/settings/unit-price",
                     },
                 ],
-            },
-        ],
-    },
-];
-
-
-export const userMenu = [
-    {
-        section: "Main",
-        items: [
-            {
-                name: "Dashboard",
-                link: "/dashboard",
-                icon: <BiSolidDashboard />,
             },
         ],
     },
@@ -199,11 +185,24 @@ export const studentMenu = [
     },
 ];
 
+export const parentMenu = [
+    {
+        section: "Main",
+        items: [
+            {
+                name: "Dashboard",
+                link: "/dashboard",
+                icon: <BiSolidDashboard />,
+            },
+        ],
+    },
+];
+
 
 export const menus = {
     super_admin: superAdminMenu,
-    system_admin: systemAdminMenu,
-    user: userMenu,
+    institute_admin: instituteAdmin,
     teacher: teacherMenu,
     student: studentMenu,
+    parent: parentMenu,
 };
