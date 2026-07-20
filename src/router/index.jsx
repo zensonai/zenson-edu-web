@@ -17,6 +17,10 @@ import LoginHistory from '../pages/superAdmin/security/LoginHistory'
 import UserAuditLog from '../pages/superAdmin/security/UserAuditLog'
 import CreatePlan from '../pages/superAdmin/plan/CreatePlan'
 import Plans from '../pages/superAdmin/plan/Plans'
+import ViewPlan from '../pages/superAdmin/plan/ViewPlan'
+import TenantCreate from '../pages/superAdmin/tenant/TenantCreate'
+import Tenants from '../pages/superAdmin/tenant/Tenants'
+import ViewTenant from '../pages/superAdmin/tenant/ViewTenant'
 
 
 function App() {
@@ -46,7 +50,11 @@ function App() {
 
                     <Route path='plan/create' element={<PrivateRoute roles={['super_admin']} ><CreatePlan /></PrivateRoute>}/>
                     <Route path='plans' element={<PrivateRoute roles={['super_admin']} ><Plans /></PrivateRoute>}/>
+                    <Route path='plan/:id' element={<PrivateRoute roles={['super_admin']} >< ViewPlan/></PrivateRoute>}/>
 
+                    <Route path='tenant/create' element={<PrivateRoute roles={['super_admin']} ><TenantCreate /></PrivateRoute>}/>
+                    <Route path='tenants' element={<PrivateRoute roles={['super_admin']} ><Tenants /></PrivateRoute>}/>
+                    <Route path='tenant/:id' element={<PrivateRoute roles={['super_admin']} ><ViewTenant /></PrivateRoute>}/>
 
 
                 </Route>

@@ -43,28 +43,6 @@ export const superAdminMenu = [
                         name: "Create Tenant",
                         link: "/dashboard/tenant/create",
                     },
-                    {
-                        name: "Export Tenant Data",
-                        link: "/dashboard/tenant/export",
-                    },
-                ],
-            },
-            {
-                name: "Tenant Admin",
-                icon: <FaUserShield />,
-                submenu: [
-                    {
-                        name: "Tenant Admins",
-                        link: "/dashboard/tenant-admins",
-                    },
-                    {
-                        name: "Create Tenant Admin",
-                        link: "/dashboard/tenant-admin/create",
-                    },
-                    {
-                        name: "Export Tenant Admin Data",
-                        link: "/dashboard/tenant-admin/export",
-                    },
                 ],
             },
         ],

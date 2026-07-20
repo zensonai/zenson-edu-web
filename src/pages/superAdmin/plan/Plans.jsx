@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import API from '../../../services/api'
 import { FaEye, FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { exportToCSV } from '../../../utils/dataexport'
+import DefaultButton from '../../../component/Buttons/DefaultButton'
 
 const Plans = () => {
     const token = localStorage.getItem('access_token')
@@ -10,6 +12,39 @@ const Plans = () => {
     const [currentPage, setCurrentPage] = useState(1)
 
     const plansPerPage = 15
+
+    const handleExport = () => {
+        exportToCSV(
+            filteredPlans,
+            [
+                {
+                    header: "#",
+                    value: (_, index) => index + 1
+                },
+                {
+                    header: "Plan",
+                    value: "plan_name"
+                },
+                {
+                    header: "Description",
+                    value: "description"
+                },
+                {
+                    header: "Monthly Price",
+                    value: "monthly_price"
+                },
+                {
+                    header: "Max Students",
+                    value: "max_students"
+                },
+                {
+                    header: "Status",
+                    value: (item) => item.status ? "Active" : "Disabled"
+                }
+            ],
+            "plans.csv"
+        );
+    };
 
     useEffect(() => {
         const fetchplans = async () => {
@@ -63,16 +98,29 @@ const Plans = () => {
                             </p>
                         </div>
 
-                        <div className="relative w-full sm:w-80">
-                            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <div className="md:flex items-center gap-3 w-full sm:w-auto">
 
-                            <input
-                                type="text"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                placeholder="Search by plan name..."
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
-                            />
+                            <div className="md:mb-0 mb-4">
+                                <DefaultButton
+                                    label="Export CSV"
+                                    onClick={handleExport}
+                                />
+                            </div>
+
+                            <div className="relative w-full sm:w-80">
+
+                                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+
+                                <input
+                                    type="text"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    placeholder="Search by plan name..."
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                />
+
+                            </div>
+
                         </div>
 
                     </div>
