@@ -1,8 +1,10 @@
 import React from "react";
 import AdminVector from "../../../assets/spadmin.svg";
 import { Crown } from "lucide-react";
+import { useAuth } from "../../../context/AuthContext";
 
 const AdminCard = () => {
+    const { auth } = useAuth()
     return (
         <div className="bg-white border border-gray-200 rounded-xl p-4 mt-4">
 
@@ -30,14 +32,14 @@ const AdminCard = () => {
                 <div className="flex justify-between">
                     <span className="text-gray-500">Email</span>
                     <span className="font-medium truncate max-w-[140px]">
-                        admin@gmail.com
+                        {auth?.user?.email}
                     </span>
                 </div>
 
                 <div className="flex justify-between">
                     <span className="text-gray-500">Role</span>
                     <span className="font-medium">
-                        Super Admin
+                        {auth?.role}
                     </span>
                 </div>
 

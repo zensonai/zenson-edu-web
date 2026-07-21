@@ -8,13 +8,38 @@ import {
     FaUsers,
     FaUserShield,
     FaClipboardList,
+    FaChalkboardTeacher,
+    FaUserGraduate,
+    FaSchool,
+    FaBook,
+    FaCalendarAlt,
+    FaUserCheck,
+    FaTasks,
+    FaClipboardCheck,
+    FaChartLine,
+    FaChartBar,
+    FaFileAlt,
+    FaBullhorn,
+    FaEnvelope,
+    FaBell,
+    FaBuilding,
+    FaGraduationCap,
+    FaCreditCard,
 } from "react-icons/fa";
 
 import {
     MdBusiness,
     MdWorkspacePremium,
     MdSecurity,
+    MdSettings,
+    MdHistory,
+    MdAssessment,
+    MdPeople,
+    MdAdminPanelSettings,
+    MdFolder,
 } from "react-icons/md";
+
+
 
 
 export const superAdminMenu = [
@@ -107,6 +132,9 @@ export const superAdminMenu = [
 ];
 
 
+
+
+
 export const instituteAdmin = [
     {
         section: "Main",
@@ -119,22 +147,146 @@ export const instituteAdmin = [
         ],
     },
     {
-        section: "Settings",
+        section: "People Management",
+        items: [
+            {
+                name: "Students",
+                icon: <FaUserGraduate />,
+                submenu: [
+                    {
+                        name: "All Students",
+                        link: "/dashboard/students",
+                    },
+                    {
+                        name: "Add Student",
+                        link: "/dashboard/student/create",
+                    },
+                ],
+            },
+            {
+                name: "Parents",
+                icon: <FaUsers />,
+                submenu: [
+                    {
+                        name: "All Parents",
+                        link: "/dashboard/parents",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        section: "Academic Management",
+        items: [
+            {
+                name: "Classes",
+                icon: <FaSchool />,
+                submenu: [
+                    {
+                        name: "All Classes",
+                        link: "/dashboard/classes",
+                    },
+                    {
+                        name: "Create Class",
+                        link: "/dashboard/class/create",
+                    },
+                ],
+            },
+            {
+                name: "Timetable",
+                icon: <FaCalendarAlt />,
+                link: "/dashboard/timetable",
+            },
+        ],
+    },
+    {
+        section: "Learning",
+        items: [
+            {
+                name: "Attendance",
+                icon: <FaUserCheck />,
+                link: "/dashboard/attendance",
+            },
+            {
+                name: "Assignments",
+                icon: <FaTasks />,
+                link: "/dashboard/assignments",
+            },
+            {
+                name: "Exams & Results",
+                icon: <FaClipboardCheck />,
+                submenu: [
+                    {
+                        name: "Exams",
+                        link: "/dashboard/exams",
+                    },
+                    {
+                        name: "Results",
+                        link: "/dashboard/results",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        section: "Reports",
+        items: [
+            {
+                name: "Student Progress",
+                icon: <FaChartLine />,
+                link: "/dashboard/report/student-progress",
+            },
+            {
+                name: "Attendance Reports",
+                icon: <FaChartBar />,
+                link: "/dashboard/report/attendance",
+            },
+            {
+                name: "Teacher Reports",
+                icon: <FaFileAlt />,
+                link: "/dashboard/report/teachers",
+            },
+        ],
+    },
+    {
+        section: "Communication",
+        items: [
+            {
+                name: "Announcements",
+                icon: <FaBullhorn />,
+                link: "/dashboard/announcements",
+            },
+            {
+                name: "Messages",
+                icon: <FaEnvelope />,
+                link: "/dashboard/messages",
+            },
+        ],
+    },
+    {
+        section: "Institute Settings",
         items: [
             {
                 name: "Settings",
                 icon: <MdSecurity />,
                 submenu: [
                     {
-                        name: "Cost Unit Price",
-                        link: "/dashboard/settings/unit-price",
+                        name: "Institute Profile",
+                        link: "/dashboard/settings/profile",
+                    },
+                    {
+                        name: "Grading System",
+                        link: "/dashboard/settings/grading",
+                    },
+                    {
+                        name: "Subscription",
+                        link: "/dashboard/settings/subscription",
                     },
                 ],
             },
         ],
     },
 ];
-
 
 export const teacherMenu = [
     {

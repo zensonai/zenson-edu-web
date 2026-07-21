@@ -1,22 +1,99 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaBuilding, FaUserShield, FaChalkboardTeacher, FaUserGraduate, FaClipboardList, FaUsers } from 'react-icons/fa'
+import API from '../../../services/api'
 
 const DashData = () => {
+    const token = localStorage.getItem('access_token')
+    const [platfromusers, SetPlatfromUsers] = useState([])
+    const [tenants, setTenants] = useState([])
+    const [plans, setPlans] = useState([])
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const res = await API.get('/admin/fetch-users', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            if (res.data.success) {
+                SetPlatfromUsers(res.data.result)
+            }
+        }
+
+        if (token) {
+            fetchUsers()
+        }
+    }, [token])
+
+
+    const superAdmins = platfromusers.filter(
+        user => user.role?.role === "super_admin"
+    )
+
+    const instituteAdmins = platfromusers.filter(
+        user => user.role?.role === "institute_admin"
+    )
+
+    const teachers = platfromusers.filter(
+        user => user.role?.role === "teacher"
+    )
+
+    const students = platfromusers.filter(
+        user => user.role?.role === "student"
+    )
+
+    useEffect(() => {
+        const fetchTenants = async () => {
+            const res = await API.get('/tenant/fetch-tenants', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            if (res.data.success === true) {
+                setTenants(res.data.result || [])
+            }
+        }
+
+        if (token) {
+            fetchTenants()
+        }
+    }, [token])
+
+
+    useEffect(() => {
+        const fetchplans = async () => {
+            const res = await API.get('/admin/fetch-plans', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            if (res.data.success === true) {
+                setPlans(res.data.result || [])
+            }
+        }
+
+        if (token) {
+            fetchplans()
+        }
+    }, [token])
 
     const datacount = [
         {
             id: 1,
             name: "Total Tenants",
             desc: "Registered institutes",
-            values: 25,
+            values: tenants.length,
             icon: FaBuilding,
             color: "blue"
         },
         {
             id: 2,
             name: "Institute Admin",
-            desc: "Management accounts",
-            values: 25,
+            desc: "accounts",
+            values: instituteAdmins.length,
             icon: FaUserShield,
             color: "lime"
         },
@@ -24,7 +101,7 @@ const DashData = () => {
             id: 3,
             name: "Teachers",
             desc: "Active teachers",
-            values: 25,
+            values: teachers.length,
             icon: FaChalkboardTeacher,
             color: "indigo"
         },
@@ -32,7 +109,7 @@ const DashData = () => {
             id: 4,
             name: "Students",
             desc: "Learning users",
-            values: 25,
+            values: students.length,
             icon: FaUserGraduate,
             color: "yellow"
         },
@@ -40,7 +117,7 @@ const DashData = () => {
             id: 5,
             name: "Plans",
             desc: "Subscription plans",
-            values: 25,
+            values: plans.length,
             icon: FaClipboardList,
             color: "orange"
         },
@@ -48,7 +125,7 @@ const DashData = () => {
             id: 6,
             name: "Platform Users",
             desc: "System accounts",
-            values: 25,
+            values: superAdmins.length + instituteAdmins.length,
             icon: FaUsers,
             color: "red"
         }

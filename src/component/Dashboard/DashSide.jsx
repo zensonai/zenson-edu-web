@@ -63,7 +63,7 @@ const DashSide = ({ closeSidebar }) => {
     }, [token]);
 
     return (
-        <aside className="h-screen w-72 bg-white border-r border-indigo-100 flex flex-col px-4 py-5">
+        <aside className="h-screen w-72 bg-white border-r border-indigo-100 flex flex-col px-4 py-5 overflow-y-auto">
 
             <div className="mb-10 px-2">
                 <div className="flex items-center gap-3">
@@ -84,7 +84,7 @@ const DashSide = ({ closeSidebar }) => {
             </div>
 
 
-            <div className="flex-1 overflow-y-auto space-y-6">
+            <div className="flex-1 space-y-6">
                 {sections.map((section) => (
                     <div key={section.section}>
 
