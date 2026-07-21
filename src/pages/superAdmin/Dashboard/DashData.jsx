@@ -91,7 +91,7 @@ const DashData = () => {
                     return (
                         <div
                             key={index}
-                            className="relative rounded-xl border border-white/40 bg-white/60 backdrop-blur-xl p-4 hover:shadow-lg transition-all duration-300"
+                            className="shadow relative rounded-xl border border-white/40 bg-white/60 backdrop-blur-xl p-4 hover:shadow-lg transition-all duration-300"
                         >
                             <div className="flex justify-between items-start">
 

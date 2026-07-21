@@ -34,7 +34,7 @@ const LatestAduits = () => {
     }, [token])
 
     return (
-        <div className="bg-white/60 backdrop-blur-xl border border-white/40 rounded-xl p-5">
+        <div className="shadow bg-white/60 backdrop-blur-xl border border-white/40 rounded-xl p-5">
 
             <div className="flex justify-between">
                 <h2 className="text-lg font-semibold text-gray-700 mb-4">
@@ -45,7 +45,7 @@ const LatestAduits = () => {
                 </a>
             </div>
 
-            <div className="space-y-3">
+            <div className="grid xl:grid-cols-1 md:grid-cols-2 gap-4">
                 {
                     auditlog.map((data, index) => {
                         return (

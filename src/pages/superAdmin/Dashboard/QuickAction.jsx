@@ -62,7 +62,7 @@ const QuickAction = () => {
                             <a
                                 href={data.link}
                                 key={index}
-                                className="border border-white/40 bg-white/60 backdrop-blur-xl rounded-xl p-5 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                                className="border shadow border-white/40 bg-white/60 backdrop-blur-xl rounded-xl p-5 hover:shadow-lg transition-all duration-300 cursor-pointer"
                             >
                                 <div className="flex flex-col items-center justify-center text-center">
 
