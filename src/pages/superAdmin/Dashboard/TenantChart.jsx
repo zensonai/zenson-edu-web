@@ -3,7 +3,7 @@ import BarChart from '../../../component/Dashboard/Charts/BarChart'
 
 const TenantChart = () => {
     return (
-        <div className="bg-white rounded-lg shadow p-5 h-[460px]">
+        <div className="bg-white rounded-lg shadow p-5 xl:h-[435px]">
             <div className="flex items-start justify-between mb-4">
                 <div>
                     <h2 className="text-lg font-semibold text-gray-800">

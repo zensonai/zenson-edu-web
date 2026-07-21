@@ -24,7 +24,7 @@ const PlanTable = () => {
     }, [token])
 
     return (
-        <div className="bg-white p-5 rounded-lg shadow h-[460px]">
+        <div className="bg-white p-5 rounded-lg shadow h-[545px]">
             <div className="flex justify-between items-start">
                 <div>
                     <h1 className="text-lg font-semibold text-gray-800">
@@ -43,7 +43,7 @@ const PlanTable = () => {
 
             <div className="mt-5 space-y-3">
                 {
-                    plans.slice(0, 4).map((data, index) => {
+                    plans.slice(0, 5).map((data, index) => {
                         return (
                             <div
                                 className="flex justify-between items-center border-b border-gray-100 pb-3 last:border-none"
