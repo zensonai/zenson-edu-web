@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
         id: null,
         user: null,
         role: null,
+        tenant: null,
     });
 
     useEffect(() => {
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
                         username,
                     },
                     role: decoded.role,
+                    tenant: decoded.tenant,
                 });
 
             } catch (error) {
@@ -72,6 +74,7 @@ export const AuthProvider = ({ children }) => {
                 username,
             },
             role: decoded.role,
+            tenant: decoded.tenant,
         });
     };
 
@@ -94,12 +97,13 @@ export const AuthProvider = ({ children }) => {
         setAuth({
             accessToken: newAccessToken,
             id: decoded.sub,
-            user:{
+            user: {
                 id: decoded.sub,
                 email,
                 username,
             },
             role: decoded.role,
+            tenant: decoded.tenant,
         });
     };
 
@@ -113,16 +117,17 @@ export const AuthProvider = ({ children }) => {
         );
 
         setAuth({
-            accessToken:null,
-            id:null,
-            user:null,
-            role:null,
+            accessToken: null,
+            id: null,
+            user: null,
+            role: null,
+            tenant: null,
         });
 
         navigate(
             "/login",
             {
-                replace:true
+                replace: true
             }
         );
     };

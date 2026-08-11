@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import API from '../../../services/api'
 import { Check, X } from 'lucide-react'
+import { jwtDecode } from "jwt-decode";
 
 const Subscription = () => {
     const token = localStorage.getItem('access_token')
@@ -44,11 +45,10 @@ const Subscription = () => {
                             return (
                                 <div
                                     key={index}
-                                    className={`flex flex-col rounded-3xl border bg-white p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${
-                                        index === 1
-                                            ? 'border-indigo-600 ring-2 ring-indigo-100'
-                                            : 'border-slate-200'
-                                    }`}
+                                    className={`flex flex-col rounded-3xl border bg-white p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 1
+                                        ? 'border-indigo-600 ring-2 ring-indigo-100'
+                                        : 'border-slate-200'
+                                        }`}
                                 >
                                     {
                                         index === 1 &&
@@ -127,11 +127,10 @@ const Subscription = () => {
                                     </div>
 
                                     <button
-                                        className={`mt-8 w-full rounded-xl py-3 font-semibold transition active:scale-95 ${
-                                            index === 1
-                                                ? 'bg-indigo-600 text-white hover:bg-indigo-700'
-                                                : 'bg-slate-900 text-white hover:bg-slate-800'
-                                        }`}
+                                        className={`mt-8 w-full rounded-xl py-3 font-semibold transition active:scale-95 ${index === 1
+                                            ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                                            : 'bg-slate-900 text-white hover:bg-slate-800'
+                                            }`}
                                     >
                                         Buy Plan
                                     </button>
