@@ -23,6 +23,8 @@ import Tenants from '../pages/superAdmin/tenant/Tenants'
 import ViewTenant from '../pages/superAdmin/tenant/ViewTenant'
 import Subscription from '../pages/instituteAdmin/Settings/Subscription'
 import InstituteProfile from '../pages/instituteAdmin/Settings/InstituteProfile'
+import AssignTeacher from '../pages/instituteAdmin/Settings/AssignTeacher'
+import CreatePayment from '../pages/payment/CreatePayment'
 
 
 function App() {
@@ -65,6 +67,12 @@ function App() {
 
                     <Route path='settings/subscription' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><Subscription /></PrivateRoute>}/>
                     <Route path='settings/profile' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><InstituteProfile /></PrivateRoute>}/>
+                    <Route path='settings/assign-teacher' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><AssignTeacher /></PrivateRoute>}/>
+
+                    
+
+                    <Route path='payments/create-payment' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><CreatePayment /></PrivateRoute>}/>
+
 
 
                 </Route>

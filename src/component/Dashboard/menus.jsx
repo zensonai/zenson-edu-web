@@ -38,6 +38,7 @@ import {
     MdAdminPanelSettings,
     MdFolder,
 } from "react-icons/md";
+import { BsCashCoin } from "react-icons/bs";
 
 
 
@@ -271,6 +272,10 @@ export const instituteAdmin = [
                 icon: <MdSecurity />,
                 submenu: [
                     {
+                        name: "Assign Teacher",
+                        link: "/dashboard/settings/assign-teacher",
+                    },
+                    {
                         name: "Institute Profile",
                         link: "/dashboard/settings/profile",
                     },
@@ -299,6 +304,25 @@ export const teacherMenu = [
             },
         ],
     },
+    {
+        section: "Payments",
+        items: [
+            {
+                name: "Payments",
+                icon: <BsCashCoin />,
+                submenu: [
+                    {
+                        name: "Create Payment",
+                        link: "/dashboard/payments/create-payment",
+                    },
+                    {
+                        name: "View Transactions",
+                        link: "/dashboard/payments/view-payments",
+                    },
+                ],
+            },
+        ],
+    },
 ];
 
 
@@ -310,6 +334,25 @@ export const studentMenu = [
                 name: "Dashboard",
                 link: "/dashboard",
                 icon: <BiSolidDashboard />,
+            },
+        ],
+    },
+    {
+        section: "Payments",
+        items: [
+            {
+                name: "Payments",
+                icon: <BsCashCoin />,
+                submenu: [
+                    {
+                        name: "Create Payment",
+                        link: "/dashboard/payments/create-payment",
+                    },
+                    {
+                        name: "View Transactions",
+                        link: "/dashboard/settings/view-payments",
+                    },
+                ],
             },
         ],
     },
