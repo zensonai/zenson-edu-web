@@ -18,8 +18,7 @@ const CreatePayment = () => {
         amount: '',
         payment_type: '',
         payment_reference: '',
-        payment_proof: null,
-        subscription_type: ''
+        payment_proof: null
     })
 
     const paymentTypeOptions = [
@@ -28,11 +27,6 @@ const CreatePayment = () => {
         { value: 'Exam Fee', label: 'Exam Fee' },
         { value: 'Registration Fee', label: 'Registration Fee' },
         { value: 'Other', label: 'Other' },
-    ]
-
-    const subscriptionTypeOptions = [
-        { value: 'Monthly', label: 'Monthly' },
-        { value: 'Yearly', label: 'Yearly' },
     ]
 
     const handleFileChange = (e) => {
@@ -59,10 +53,6 @@ const CreatePayment = () => {
             formData.append('amount', values.amount)
             formData.append('payment_type', values.payment_type)
             formData.append('payment_reference', values.payment_reference)
-
-            if (values.payment_type === 'Tenant Subscription') {
-                formData.append('subscription_type', values.subscription_type)
-            }
 
             if (values.payment_proof) {
                 formData.append('payment_proof', values.payment_proof)
@@ -112,6 +102,7 @@ const CreatePayment = () => {
                     <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
                         Create Payment
                     </h1>
+
                     <p className="mt-2 text-sm text-gray-500">
                         Submit your payment details and payment proof.
                     </p>
@@ -120,6 +111,7 @@ const CreatePayment = () => {
                 <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100 sm:p-6 lg:p-8">
                     <form onSubmit={headleCreatePayment} method="post">
                         <div className="grid grid-cols-1 gap-x-6 gap-y-0 md:grid-cols-2">
+
                             <div className="md:col-span-2">
                                 <TextAreaInput
                                     label="Enter Payment Description"
@@ -151,17 +143,6 @@ const CreatePayment = () => {
                                 options={paymentTypeOptions}
                             />
 
-                            {values.payment_type === 'Tenant Subscription' && (
-                                <Dropdown
-                                    label="Select Subscription Type"
-                                    name="subscription_type"
-                                    value={values.subscription_type}
-                                    required
-                                    onChange={handleChange}
-                                    options={subscriptionTypeOptions}
-                                />
-                            )}
-
                             <DefaultInput
                                 label="Enter Payment Reference"
                                 value={values.payment_reference}
@@ -192,6 +173,7 @@ const CreatePayment = () => {
                                     disabled={loading}
                                 />
                             </div>
+
                         </div>
                     </form>
                 </div>

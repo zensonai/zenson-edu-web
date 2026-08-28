@@ -25,6 +25,10 @@ import Subscription from '../pages/instituteAdmin/Settings/Subscription'
 import InstituteProfile from '../pages/instituteAdmin/Settings/InstituteProfile'
 import AssignTeacher from '../pages/instituteAdmin/Settings/AssignTeacher'
 import CreatePayment from '../pages/payment/CreatePayment'
+import Payments from '../pages/superAdmin/payments/Payments'
+import ViewPayment from '../pages/superAdmin/payments/ViewPayment'
+import ViewMyPayment from '../pages/payment/ViewMyPayment'
+import PaymentResubmit from '../pages/payment/PaymentResubmit'
 
 
 function App() {
@@ -60,6 +64,10 @@ function App() {
                     <Route path='tenants' element={<PrivateRoute roles={['super_admin']} ><Tenants /></PrivateRoute>}/>
                     <Route path='tenant/:id' element={<PrivateRoute roles={['super_admin']} ><ViewTenant /></PrivateRoute>}/>
 
+
+                    <Route path='payments' element={<PrivateRoute roles={['super_admin']} ><Payments /></PrivateRoute>}/>
+                    <Route path='payment/view/:id' element={<PrivateRoute roles={['super_admin']} ><ViewPayment /></PrivateRoute>}/>
+
                     {/* --------------------------------------------------------------------------------------------------- */}
 
                     {/* institute_admin */}
@@ -71,7 +79,9 @@ function App() {
 
                     
 
-                    <Route path='payments/create-payment' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><CreatePayment /></PrivateRoute>}/>
+                    <Route path='payments/create-payment' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><CreatePayment /></PrivateRoute>}/>
+                    <Route path='payments/view-my-payments' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><ViewMyPayment /></PrivateRoute>}/>
+                    <Route path='payments/resubmit-payment/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><PaymentResubmit /></PrivateRoute>}/>
 
 
 

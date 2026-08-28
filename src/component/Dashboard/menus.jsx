@@ -112,6 +112,21 @@ export const superAdminMenu = [
         ],
     },
     {
+        section: "Payments",
+        items: [
+            {
+                name: "Payment Management",
+                icon: <BsCashCoin />,
+                submenu: [
+                    {
+                        name: "Payments",
+                        link: "/dashboard/payments",
+                    },
+                ],
+            },
+        ],
+    },
+    {
         section: "Security",
         items: [
             {
@@ -317,7 +332,7 @@ export const teacherMenu = [
                     },
                     {
                         name: "View Transactions",
-                        link: "/dashboard/payments/view-payments",
+                        link: "/dashboard/payments/view-my-payments",
                     },
                 ],
             },
@@ -350,7 +365,7 @@ export const studentMenu = [
                     },
                     {
                         name: "View Transactions",
-                        link: "/dashboard/settings/view-payments",
+                        link: "/dashboard/payments/view-my-payments",
                     },
                 ],
             },
