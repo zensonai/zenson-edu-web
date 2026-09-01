@@ -35,6 +35,10 @@ import ViewStudent from '../pages/instituteAdmin/students/ViewStudent'
 import Teachers from '../pages/instituteAdmin/teacher/Teachers'
 import CreateTeacher from '../pages/instituteAdmin/teacher/CreateTeacher'
 import ViewTeacher from '../pages/instituteAdmin/teacher/ViewTeacher'
+import CreateClass from '../pages/instituteAdmin/classes/CreateClass'
+import Classes from '../pages/instituteAdmin/classes/Classes'
+import ViewClass from '../pages/instituteAdmin/classes/ViewClass'
+import Timetable from '../pages/timetable/Timetable'
 
 
 function App() {
@@ -97,6 +101,11 @@ function App() {
                     <Route path='teacher/create' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><CreateTeacher /></PrivateRoute>}/>
                     <Route path='teacher/view/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><ViewTeacher /></PrivateRoute>}/>
 
+                    <Route path='classes' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><Classes /></PrivateRoute>}/>
+                    <Route path='class/create' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><CreateClass /></PrivateRoute>}/>
+                    <Route path='class/view/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><ViewClass /></PrivateRoute>}/>
+
+                    <Route path='timetable' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><Timetable /></PrivateRoute>}/>
 
 
                 </Route>

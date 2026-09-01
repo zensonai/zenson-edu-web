@@ -47,7 +47,7 @@ const CreateStudent = () => {
                 })
 
                 setTimeout(() => {
-                    navigate('dashboard/students')
+                    navigate('/dashboard/students')
                     window.location.reload()
                 }, 3000)
             }
