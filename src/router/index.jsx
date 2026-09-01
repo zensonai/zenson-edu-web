@@ -29,6 +29,12 @@ import Payments from '../pages/superAdmin/payments/Payments'
 import ViewPayment from '../pages/superAdmin/payments/ViewPayment'
 import ViewMyPayment from '../pages/payment/ViewMyPayment'
 import PaymentResubmit from '../pages/payment/PaymentResubmit'
+import CreateStudent from '../pages/instituteAdmin/students/CreateStudent'
+import Students from '../pages/instituteAdmin/students/Students'
+import ViewStudent from '../pages/instituteAdmin/students/ViewStudent'
+import Teachers from '../pages/instituteAdmin/teacher/Teachers'
+import CreateTeacher from '../pages/instituteAdmin/teacher/CreateTeacher'
+import ViewTeacher from '../pages/instituteAdmin/teacher/ViewTeacher'
 
 
 function App() {
@@ -78,10 +84,18 @@ function App() {
                     <Route path='settings/assign-teacher' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><AssignTeacher /></PrivateRoute>}/>
 
                     
-
                     <Route path='payments/create-payment' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><CreatePayment /></PrivateRoute>}/>
                     <Route path='payments/view-my-payments' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><ViewMyPayment /></PrivateRoute>}/>
                     <Route path='payments/resubmit-payment/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><PaymentResubmit /></PrivateRoute>}/>
+
+
+                    <Route path='students' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><Students /></PrivateRoute>}/>
+                    <Route path='student/create' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><CreateStudent /></PrivateRoute>}/>
+                    <Route path='student/view/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><ViewStudent /></PrivateRoute>}/>
+
+                    <Route path='teachers' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><Teachers /></PrivateRoute>}/>
+                    <Route path='teacher/create' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><CreateTeacher /></PrivateRoute>}/>
+                    <Route path='teacher/view/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><ViewTeacher /></PrivateRoute>}/>
 
 
 

@@ -8,7 +8,6 @@ import {
     FaUsers,
     FaUserShield,
     FaClipboardList,
-    FaChalkboardTeacher,
     FaUserGraduate,
     FaSchool,
     FaBook,
@@ -40,7 +39,7 @@ import {
 } from "react-icons/md";
 import { BsCashCoin } from "react-icons/bs";
 
-
+import { FaChalkboardUser } from "react-icons/fa6";
 
 
 export const superAdminMenu = [
@@ -180,12 +179,16 @@ export const instituteAdmin = [
                 ],
             },
             {
-                name: "Parents",
-                icon: <FaUsers />,
+                name: "Teachers",
+                icon: <FaChalkboardUser />,
                 submenu: [
                     {
-                        name: "All Parents",
-                        link: "/dashboard/parents",
+                        name: "All Teachers",
+                        link: "/dashboard/teachers",
+                    },
+                    {
+                        name: "Add Teachers",
+                        link: "/dashboard/teacher/create",
                     },
                 ],
             },
@@ -286,10 +289,6 @@ export const instituteAdmin = [
                 name: "Settings",
                 icon: <MdSecurity />,
                 submenu: [
-                    {
-                        name: "Assign Teacher",
-                        link: "/dashboard/settings/assign-teacher",
-                    },
                     {
                         name: "Institute Profile",
                         link: "/dashboard/settings/profile",
