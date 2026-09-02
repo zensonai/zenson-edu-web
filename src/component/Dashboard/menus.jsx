@@ -249,26 +249,6 @@ export const instituteAdmin = [
                 icon: <FaChartBar />,
                 link: "/dashboard/report/attendance",
             },
-            {
-                name: "Teacher Reports",
-                icon: <FaFileAlt />,
-                link: "/dashboard/report/teachers",
-            },
-        ],
-    },
-    {
-        section: "Communication",
-        items: [
-            {
-                name: "Announcements",
-                icon: <FaBullhorn />,
-                link: "/dashboard/announcements",
-            },
-            {
-                name: "Messages",
-                icon: <FaEnvelope />,
-                link: "/dashboard/messages",
-            },
         ],
     },
     {
