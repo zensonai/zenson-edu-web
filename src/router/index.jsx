@@ -48,6 +48,9 @@ import CreateAssignment from '../pages/teacherDash/assigments/CreateAssignment'
 import Assignments from '../pages/teacherDash/assigments/Assignments'
 import MyAssignments from '../pages/teacherDash/assigments/MyAssignments'
 import ViewAssignment from '../pages/teacherDash/assigments/ViewAssignment'
+import FetchResult from '../pages/teacherDash/result/FetchResult'
+import TeacherResult from '../pages/teacherDash/result/TeacherResult'
+import StudentMarks from '../pages/teacherDash/result/StudentMarks'
 
 
 function App() {
@@ -127,6 +130,11 @@ function App() {
                     <Route path='student/assignments' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><MyAssignments /></PrivateRoute>}/>
                     
                     <Route path='assignment/view/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><ViewAssignment /></PrivateRoute>}/>
+                    <Route path='assignment/results' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><FetchResult /></PrivateRoute>}/>
+                    
+                    <Route path='results' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><TeacherResult /></PrivateRoute>}/>
+                    <Route path='student/my-results' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><StudentMarks /></PrivateRoute>}/>
+
 
 
                 </Route>

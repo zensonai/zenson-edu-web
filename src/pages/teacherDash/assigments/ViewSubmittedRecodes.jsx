@@ -19,6 +19,8 @@ const ViewSubmittedRecodes = ({
     const [assignmentData, setAssignmentData] = useState(null)
     const [loading, setLoading] = useState(true)
     const [toast, setToast] = useState(null)
+    const [marks, setMarks] = useState({})
+    const [marksLoading, setMarksLoading] = useState({})
 
     const fetchSubmittedRecords = async () => {
         if (!token || !assignment?._id) return
@@ -67,6 +69,76 @@ const ViewSubmittedRecodes = ({
 
     const getAnswerSheetUrl = (filename) => {
         return `${import.meta.env.VITE_APP_API_FILES}/uploads/answer-sheets/${filename}`
+    }
+
+    const handleCreateMarks = async (studentID) => {
+        const studentMarks = marks[studentID]
+
+        if (studentMarks === undefined || studentMarks === '') {
+            setToast({
+                success: false,
+                message: 'Please enter marks',
+            })
+            return
+        }
+
+        if (Number(studentMarks) < 0) {
+            setToast({
+                success: false,
+                message: 'Marks cannot be less than 0',
+            })
+            return
+        }
+
+        setMarksLoading((prev) => ({
+            ...prev,
+            [studentID]: true,
+        }))
+
+        try {
+            const res = await API.post(
+                `/learn/create-marks/${assignment?._id}/${studentID}`,
+                {
+                    marks: Number(studentMarks),
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+
+            if (res.data.success === true) {
+                setToast({
+                    success: true,
+                    message: res.data.message,
+                })
+
+                setRecords((prev) =>
+                    prev.map((student) =>
+                        student._id === studentID
+                            ? {
+                                ...student,
+                                submission: {
+                                    ...student.submission,
+                                    marks: Number(studentMarks),
+                                },
+                            }
+                            : student
+                    )
+                )
+            }
+        } catch (err) {
+            setToast({
+                success: false,
+                message: err.response?.data?.message || 'Failed to create marks',
+            })
+        } finally {
+            setMarksLoading((prev) => ({
+                ...prev,
+                [studentID]: false,
+            }))
+        }
     }
 
     if (loading) {
@@ -226,7 +298,7 @@ const ViewSubmittedRecodes = ({
                 ) : (
                     <>
                         <div className="hidden overflow-x-auto md:block">
-                            <table className="w-full min-w-[800px]">
+                            <table className="w-full min-w-[1000px]">
 
                                 <thead>
                                     <tr className="border-b border-gray-200 bg-gray-50 text-left">
@@ -247,8 +319,12 @@ const ViewSubmittedRecodes = ({
                                             Submitted At
                                         </th>
 
+                                        <th className="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                            Marks
+                                        </th>
+
                                         <th className="px-5 py-4 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">
-                                            Action
+                                            Answer Sheet
                                         </th>
 
                                     </tr>
@@ -305,6 +381,45 @@ const ViewSubmittedRecodes = ({
                                                         {new Date(
                                                             student.submission.createdAt
                                                         ).toLocaleString()}
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-sm text-gray-400">
+                                                        —
+                                                    </span>
+                                                )}
+                                            </td>
+
+                                            <td className="px-5 py-4">
+                                                {student.submitted ? (
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="number"
+                                                            min="0"
+                                                            value={
+                                                                marks[student._id] ??
+                                                                student.submission?.marks ??
+                                                                ''
+                                                            }
+                                                            onChange={(e) =>
+                                                                setMarks((prev) => ({
+                                                                    ...prev,
+                                                                    [student._id]: e.target.value,
+                                                                }))
+                                                            }
+                                                            className="w-20 border border-gray-200 px-3 py-2 text-sm text-gray-700 outline-none focus:border-indigo-500"
+                                                            placeholder="Marks"
+                                                        />
+
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleCreateMarks(student._id)}
+                                                            disabled={marksLoading[student._id]}
+                                                            className="border border-indigo-600 bg-indigo-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                                                        >
+                                                            {marksLoading[student._id]
+                                                                ? 'Saving...'
+                                                                : 'Save'}
+                                                        </button>
                                                     </div>
                                                 ) : (
                                                     <span className="text-sm text-gray-400">
@@ -406,7 +521,7 @@ const ViewSubmittedRecodes = ({
 
                                     </div>
 
-                                    <div className="mt-4 grid grid-cols-1 gap-3 border-t border-gray-100 pt-4 sm:grid-cols-2">
+                                    <div className="mt-4 grid grid-cols-1 gap-3 border-t border-gray-100 pt-4 sm:grid-cols-3">
 
                                         <div className="min-w-0">
                                             <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
@@ -426,6 +541,49 @@ const ViewSubmittedRecodes = ({
                                             ) : (
                                                 <p className="mt-1 text-xs text-gray-400">
                                                     Not submitted
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        <div className="min-w-0">
+                                            <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
+                                                Marks
+                                            </p>
+
+                                            {student.submitted ? (
+                                                <div className="mt-1 flex items-center gap-2">
+                                                    <input
+                                                        type="number"
+                                                        min="0"
+                                                        value={
+                                                            marks[student._id] ??
+                                                            student.submission?.marks ??
+                                                            ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            setMarks((prev) => ({
+                                                                ...prev,
+                                                                [student._id]: e.target.value,
+                                                            }))
+                                                        }
+                                                        className="w-20 border border-gray-200 px-2.5 py-1.5 text-xs text-gray-700 outline-none focus:border-indigo-500"
+                                                        placeholder="Marks"
+                                                    />
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleCreateMarks(student._id)}
+                                                        disabled={marksLoading[student._id]}
+                                                        className="border border-indigo-600 bg-indigo-600 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                                                    >
+                                                        {marksLoading[student._id]
+                                                            ? 'Saving...'
+                                                            : 'Save'}
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <p className="mt-1 text-xs text-gray-400">
+                                                    —
                                                 </p>
                                             )}
                                         </div>

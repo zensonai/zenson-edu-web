@@ -241,16 +241,16 @@ export const instituteAdmin = [
             },
         ],
     },
-    {
-        section: "Reports",
-        items: [
-            {
-                name: "Attendance Reports",
-                icon: <FaChartBar />,
-                link: "/dashboard/report/attendance",
-            },
-        ],
-    },
+    // {
+    //     section: "Reports",
+    //     items: [
+    //         {
+    //             name: "Attendance Reports",
+    //             icon: <FaChartBar />,
+    //             link: "/dashboard/report/attendance",
+    //         },
+    //     ],
+    // },
     {
         section: "Institute Settings",
         items: [
