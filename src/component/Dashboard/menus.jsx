@@ -222,26 +222,20 @@ export const instituteAdmin = [
         section: "Learning",
         items: [
             {
-                name: "Attendance",
-                icon: <FaUserCheck />,
-                link: "/dashboard/attendance",
-            },
-            {
                 name: "Assignments",
-                icon: <FaTasks />,
-                link: "/dashboard/assignments",
-            },
-            {
-                name: "Exams & Results",
                 icon: <FaClipboardCheck />,
                 submenu: [
                     {
-                        name: "Exams",
-                        link: "/dashboard/exams",
+                        name: "Assignments",
+                        link: "/dashboard/assignments",
+                    },
+                    {
+                        name: "Create Assignment",
+                        link: "/dashboard/assignment/create",
                     },
                     {
                         name: "Results",
-                        link: "/dashboard/results",
+                        link: "/dashboard/assignment/results",
                     },
                 ],
             },
@@ -250,11 +244,6 @@ export const instituteAdmin = [
     {
         section: "Reports",
         items: [
-            {
-                name: "Student Progress",
-                icon: <FaChartLine />,
-                link: "/dashboard/report/student-progress",
-            },
             {
                 name: "Attendance Reports",
                 icon: <FaChartBar />,
@@ -319,6 +308,55 @@ export const teacherMenu = [
         ],
     },
     {
+        section: "Classes & TimeTable",
+        items: [
+            {
+                name: "Classes",
+                icon: <FaSchool />,
+                submenu: [
+                    {
+                        name: "My Classes",
+                        link: "/dashboard/classes/my-classes",
+                    },
+                ],
+            },
+            {
+                name: "Time Table",
+                icon: <FaSchool />,
+                submenu: [
+                    {
+                        name: "My Time Table",
+                        link: "/dashboard/timetable",
+                    },
+                ],
+            },
+        ],
+    },
+
+    {
+        section: "Learning",
+        items: [
+            {
+                name: "Assignments",
+                icon: <FaClipboardCheck />,
+                submenu: [
+                    {
+                        name: "Assignments",
+                        link: "/dashboard/assignments",
+                    },
+                    {
+                        name: "Create Assignment",
+                        link: "/dashboard/assignment/create",
+                    },
+                    {
+                        name: "Results",
+                        link: "/dashboard/results",
+                    },
+                ],
+            },
+        ],
+    },
+    {
         section: "Payments",
         items: [
             {
@@ -348,6 +386,55 @@ export const studentMenu = [
                 name: "Dashboard",
                 link: "/dashboard",
                 icon: <BiSolidDashboard />,
+            },
+        ],
+    },
+    {
+        section: "Classes & TimeTable",
+        items: [
+            {
+                name: "Classes",
+                icon: <FaSchool />,
+                submenu: [
+                    {
+                        name: "My Classes",
+                        link: "/dashboard/student/my-classes",
+                    },
+                ],
+            },
+            {
+                name: "Time Table",
+                icon: <FaSchool />,
+                submenu: [
+                    {
+                        name: "My Time Table",
+                        link: "/dashboard/timetable",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        section: "Learning",
+        items: [
+            {
+                name: "My Assignments",
+                icon: <FaTasks />,
+                link: "/dashboard/student/assignments",
+            },
+            {
+                name: "Exams & Results",
+                icon: <FaClipboardCheck />,
+                submenu: [
+                    {
+                        name: "Exams",
+                        link: "/dashboard/student/my-exams",
+                    },
+                    {
+                        name: "Results",
+                        link: "/dashboard/student/my-results",
+                    },
+                ],
             },
         ],
     },

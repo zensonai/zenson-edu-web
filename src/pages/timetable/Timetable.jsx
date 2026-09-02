@@ -1,93 +1,45 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import API from '../../services/api'
+import { useAuth } from '../../context/AuthContext'
 
 const Timetable = () => {
-    const token = localStorage.getItem('access_token')
+    const { auth } = useAuth()
 
     const [timetable, setTimetable] = useState([])
     const [currentDate, setCurrentDate] = useState(new Date())
 
-    const getClassDateParts = item => {
-        if (!item.class?.time) {
-            return null
-        }
-
-        const value = String(item.class.time)
-
-        const match = value.match(
-            /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/
-        )
-
-        if (!match) {
-            return null
-        }
-
-        return {
-            year: Number(match[1]),
-            month: Number(match[2]) - 1,
-            day: Number(match[3]),
-            hour: Number(match[4]),
-            minute: Number(match[5]),
-        }
-    }
-
     useEffect(() => {
         const fetchTimetable = async () => {
-            const res = await API.get('/class/timetable', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+            try {
+                let endpoint = '/class/timetable'
 
-            if (res.data.success === true) {
-                const data = res.data.result || []
-
-                setTimetable(data)
-
-                if (data.length > 0) {
-                    const firstClass = data
-                        .filter(item => item.class?.time)
-                        .sort((a, b) => {
-                            const dateA = getClassDateParts(a)
-                            const dateB = getClassDateParts(b)
-
-                            if (!dateA || !dateB) {
-                                return 0
-                            }
-
-                            return (
-                                new Date(
-                                    dateA.year,
-                                    dateA.month,
-                                    dateA.day
-                                ) -
-                                new Date(
-                                    dateB.year,
-                                    dateB.month,
-                                    dateB.day
-                                )
-                            )
-                        })[0]
-
-                    const date = getClassDateParts(firstClass)
-
-                    if (date) {
-                        setCurrentDate(
-                            new Date(
-                                date.year,
-                                date.month,
-                                date.day
-                            )
-                        )
-                    }
+                if (auth?.role === 'teacher') {
+                    endpoint = '/class/teacher-timetable'
+                } else if (auth?.role === 'student') {
+                    endpoint = '/class/student-timetable'
                 }
+
+                const res = await API.get(endpoint)
+
+                if (res.data?.success === true) {
+                    const data = Array.isArray(res.data.result)
+                        ? res.data.result
+                        : []
+
+                    setTimetable(data)
+                } else {
+                    setTimetable([])
+                }
+            } catch (error) {
+
+                setTimetable([])
             }
         }
 
-        if (token) {
+        if (auth?.role) {
             fetchTimetable()
         }
-    }, [token])
+    }, [auth?.role])
 
     const getMonday = date => {
         const result = new Date(date)
@@ -114,59 +66,45 @@ const Timetable = () => {
 
             return date
         })
-    }, [weekStart])
+    }, [
+        weekStart.getFullYear(),
+        weekStart.getMonth(),
+        weekStart.getDate(),
+    ])
 
     const getClassesForDate = date => {
+        const dayNames = [
+            'sunday',
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+        ]
+
+        const selectedDay = dayNames[date.getDay()]
+
         return timetable
             .filter(item => {
-                if (item.status !== 'active') {
+                if (item?.status !== 'active') {
                     return false
-                }
-
-                const classDate = getClassDateParts(item)
-
-                if (!classDate) {
-                    return false
-                }
-
-                const firstClassDate = new Date(
-                    classDate.year,
-                    classDate.month,
-                    classDate.day
-                )
-
-                const selectedDate = new Date(
-                    date.getFullYear(),
-                    date.getMonth(),
-                    date.getDate()
-                )
-
-                if (selectedDate < firstClassDate) {
-                    return false
-                }
-
-                if (item.class?.continue_class === true) {
-                    return (
-                        selectedDate.getDay() ===
-                        firstClassDate.getDay()
-                    )
                 }
 
                 return (
-                    selectedDate.getFullYear() === classDate.year &&
-                    selectedDate.getMonth() === classDate.month &&
-                    selectedDate.getDate() === classDate.day
+                    String(item?.day || '').toLowerCase() ===
+                    selectedDay
                 )
             })
             .sort((a, b) =>
-                (a.startTime || '').localeCompare(
-                    b.startTime || ''
+                String(a?.startTime || '').localeCompare(
+                    String(b?.startTime || '')
                 )
             )
     }
 
     const getTeacherName = item => {
-        const teacher = item.class?.teacher
+        const teacher = item?.class?.teacher
 
         if (!teacher) {
             return 'Teacher'
@@ -182,7 +120,21 @@ const Timetable = () => {
                 .join(' ')
         }
 
-        return teacher.email || 'Teacher'
+        if (teacher.user?.profile) {
+            return [
+                teacher.user.profile.fname,
+                teacher.user.profile.mname,
+                teacher.user.profile.lname,
+            ]
+                .filter(Boolean)
+                .join(' ')
+        }
+
+        return (
+            teacher.email ||
+            teacher.user?.email ||
+            'Teacher'
+        )
     }
 
     const formatTime = time => {
@@ -190,21 +142,23 @@ const Timetable = () => {
             return '-'
         }
 
-        const [hours, minutes] = time.split(':')
+        const [hours, minutes] = String(time).split(':')
 
-        const date = new Date(2000, 0, 1)
+        let hour = Number(hours)
 
-        date.setHours(
-            Number(hours),
-            Number(minutes),
-            0,
-            0
-        )
+        if (Number.isNaN(hour)) {
+            return String(time)
+        }
 
-        return date.toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-        })
+        const period = hour >= 12 ? 'PM' : 'AM'
+
+        hour = hour % 12
+
+        if (hour === 0) {
+            hour = 12
+        }
+
+        return `${hour}:${minutes || '00'} ${period}`
     }
 
     const formatDate = date => {
@@ -382,8 +336,7 @@ const Timetable = () => {
 
                     {weekDays.map(date => {
 
-                        const classes =
-                            getClassesForDate(date)
+                        const classes = getClassesForDate(date)
 
                         const isToday =
                             date.toDateString() ===
@@ -396,17 +349,19 @@ const Timetable = () => {
                             >
 
                                 <div
-                                    className={`border-b border-gray-200 p-4 ${isToday
+                                    className={`border-b border-gray-200 p-4 ${
+                                        isToday
                                             ? 'bg-indigo-50'
                                             : 'bg-gray-50'
-                                        }`}
+                                    }`}
                                 >
 
                                     <p
-                                        className={`text-xs font-semibold uppercase ${isToday
+                                        className={`text-xs font-semibold uppercase ${
+                                            isToday
                                                 ? 'text-indigo-600'
                                                 : 'text-gray-500'
-                                            }`}
+                                        }`}
                                     >
                                         {date.toLocaleDateString(
                                             'en-US',
@@ -417,10 +372,11 @@ const Timetable = () => {
                                     </p>
 
                                     <p
-                                        className={`mt-1 text-2xl font-bold ${isToday
+                                        className={`mt-1 text-2xl font-bold ${
+                                            isToday
                                                 ? 'text-indigo-600'
                                                 : 'text-gray-900'
-                                            }`}
+                                        }`}
                                     >
                                         {date.getDate()}
                                     </p>

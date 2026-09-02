@@ -39,6 +39,12 @@ import CreateClass from '../pages/instituteAdmin/classes/CreateClass'
 import Classes from '../pages/instituteAdmin/classes/Classes'
 import ViewClass from '../pages/instituteAdmin/classes/ViewClass'
 import Timetable from '../pages/timetable/Timetable'
+import MyClasses from '../pages/teacherDash/MyClasses'
+import ViewMyClass from '../pages/teacherDash/ViewMyClass'
+import AttendanceClass from '../pages/teacherDash/AttendanceClass'
+import StdMyClasses from '../pages/studentDash/StdMyClasses'
+import StdViewMyClass from '../pages/studentDash/StdViewMyClass'
+import CreateAssignment from '../pages/teacherDash/assigments/CreateAssignment'
 
 
 function App() {
@@ -106,6 +112,14 @@ function App() {
                     <Route path='class/view/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin']} ><ViewClass /></PrivateRoute>}/>
 
                     <Route path='timetable' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><Timetable /></PrivateRoute>}/>
+                    <Route path='classes/my-classes' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><MyClasses /></PrivateRoute>}/>
+                    <Route path='view-my-class/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><ViewMyClass /></PrivateRoute>}/>
+                    <Route path='classes/attendance-class/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><AttendanceClass /></PrivateRoute>}/>
+
+                    <Route path='student/my-classes' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><StdMyClasses /></PrivateRoute>}/>
+                    <Route path='student/view-my-class/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><StdViewMyClass /></PrivateRoute>}/>
+
+                    <Route path='assignment/create' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><CreateAssignment /></PrivateRoute>}/>
 
 
                 </Route>
