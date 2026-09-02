@@ -45,6 +45,9 @@ import AttendanceClass from '../pages/teacherDash/AttendanceClass'
 import StdMyClasses from '../pages/studentDash/StdMyClasses'
 import StdViewMyClass from '../pages/studentDash/StdViewMyClass'
 import CreateAssignment from '../pages/teacherDash/assigments/CreateAssignment'
+import Assignments from '../pages/teacherDash/assigments/Assignments'
+import MyAssignments from '../pages/teacherDash/assigments/MyAssignments'
+import ViewAssignment from '../pages/teacherDash/assigments/ViewAssignment'
 
 
 function App() {
@@ -118,8 +121,12 @@ function App() {
 
                     <Route path='student/my-classes' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><StdMyClasses /></PrivateRoute>}/>
                     <Route path='student/view-my-class/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><StdViewMyClass /></PrivateRoute>}/>
-
+                   
+                    <Route path='assignments' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><Assignments /></PrivateRoute>}/>
                     <Route path='assignment/create' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher']} ><CreateAssignment /></PrivateRoute>}/>
+                    <Route path='student/assignments' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><MyAssignments /></PrivateRoute>}/>
+                    
+                    <Route path='assignment/view/:id' element={<PrivateRoute roles={['super_admin', 'institute_admin', 'teacher', 'student']} ><ViewAssignment /></PrivateRoute>}/>
 
 
                 </Route>

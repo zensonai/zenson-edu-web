@@ -423,13 +423,9 @@ export const studentMenu = [
                 link: "/dashboard/student/assignments",
             },
             {
-                name: "Exams & Results",
+                name: "Results",
                 icon: <FaClipboardCheck />,
                 submenu: [
-                    {
-                        name: "Exams",
-                        link: "/dashboard/student/my-exams",
-                    },
                     {
                         name: "Results",
                         link: "/dashboard/student/my-results",

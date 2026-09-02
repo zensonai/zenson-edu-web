@@ -1,41 +1,41 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import API from '../../../services/api'
-import { FaMagnifyingGlass, FaClipboardList, FaCalendarDays, FaBookOpen, FaArrowRight, FaClock, FaChalkboardUser } from 'react-icons/fa6'
-import useAuth from '../../../hooks/useAuth'
+import {
+    FaMagnifyingGlass,
+    FaClipboardList,
+    FaCalendarDays,
+    FaBookOpen,
+    FaArrowRight,
+    FaClock,
+    FaChalkboardUser,
+} from 'react-icons/fa6'
 
-const Assignments = () => {
+const MyAssignments = () => {
     const token = localStorage.getItem('access_token')
-    const [assigments, setAssigments] = useState([])
+    const [myassignments, setMyassignments] = useState([])
     const [search, setSearch] = useState('')
     const [loading, setLoading] = useState(true)
-    const { auth } = useAuth()
 
     useEffect(() => {
-        const fetchassignments = async () => {
-            setLoading(true)
-
-            const endpoint = auth?.role === 'teacher'
-                ? '/learn/teacher-assigments'
-                : '/learn/tenant-assigments'
-
-            const res = await API.get(endpoint, {
+        const fetchmyassignments = async () => {
+            const res = await API.get('/learn/student-assigments', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
 
             if (res.data.success === true) {
-                setAssigments(res.data.result)
+                setMyassignments(res.data.result)
             }
 
             setLoading(false)
         }
 
-        if (token && auth?.role) fetchassignments()
-    }, [token, auth?.role])
+        if (token) fetchmyassignments()
+    }, [token])
 
     const filteredAssignments = useMemo(() => {
-        return assigments.filter((assignment) => {
+        return myassignments.filter((assignment) => {
             const searchValue = search.toLowerCase()
 
             const timetableSearch = assignment.timetable?.some((schedule) => {
@@ -57,7 +57,7 @@ const Assignments = () => {
                 timetableSearch
             )
         })
-    }, [assigments, search])
+    }, [myassignments, search])
 
     const getStatus = (assignment) => {
         if (assignment.status) {
@@ -124,13 +124,11 @@ const Assignments = () => {
 
                                 <div>
                                     <h1 className="text-2xl font-bold text-gray-900">
-                                        All Assignments
+                                        My Assignments
                                     </h1>
 
                                     <p className="mt-1 text-sm text-gray-500">
-                                        {auth?.role === 'teacher'
-                                            ? 'Manage your assignments'
-                                            : 'Manage and view assignments in your institute'}
+                                        View and manage your assigned coursework
                                     </p>
                                 </div>
                             </div>
@@ -153,7 +151,7 @@ const Assignments = () => {
                                 type="text"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                placeholder="Search assignments, classes, subjects, timetable..."
+                                placeholder="Search assignments, subjects, classes, timetable..."
                                 className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-sm text-gray-800 outline-none transition focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100"
                             />
                         </div>
@@ -243,13 +241,13 @@ const Assignments = () => {
 
                                                         <div className="min-w-0">
                                                             <p className="text-xs text-gray-400">
-                                                                Class Time
+                                                                Class
                                                             </p>
 
                                                             <p className="truncate text-sm font-medium text-gray-700">
-                                                                {data.timetable?.length > 0
-                                                                    ? `${data.timetable[0].startTime} - ${data.timetable[0].endTime}`
-                                                                    : 'No class time'}
+                                                                {data.class?.name ||
+                                                                    data.class?.className ||
+                                                                    'Assigned Class'}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -272,6 +270,24 @@ const Assignments = () => {
                                                         </div>
                                                     </div>
                                                 )}
+
+                                                <div className="flex items-center gap-3">
+                                                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gray-50 text-gray-500">
+                                                        <FaClock className="text-xs" />
+                                                    </div>
+
+                                                    <div>
+                                                        <p className="text-xs text-gray-400">
+                                                            Class Time
+                                                        </p>
+
+                                                        <p className="text-sm font-medium text-gray-700">
+                                                            {data.timetable?.length > 0
+                                                                ? `${data.timetable[0].startTime} - ${data.timetable[0].endTime}`
+                                                                : 'No class time'}
+                                                        </p>
+                                                    </div>
+                                                </div>
 
                                                 <div className="flex items-center gap-3">
                                                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gray-50 text-gray-500">
@@ -325,7 +341,7 @@ const Assignments = () => {
                                                 </div>
                                             )}
 
-                                            <a href={`assignment/view/${data._id}`}>
+                                            <a href={`../assignment/view/${data._id}`}>
                                                 <button
                                                     type="button"
                                                     className="mt-5 flex w-full items-center justify-between rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-indigo-600"
@@ -335,7 +351,6 @@ const Assignments = () => {
                                                     <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
                                                 </button>
                                             </a>
-
                                         </div>
                                     </div>
                                 )
@@ -354,7 +369,7 @@ const Assignments = () => {
                             <p className="mt-2 max-w-md text-sm text-gray-500">
                                 {search
                                     ? `We couldn't find any assignments matching "${search}".`
-                                    : 'There are currently no assignments available in your institute.'}
+                                    : 'You currently have no assignments assigned to you.'}
                             </p>
                         </div>
                     )}
@@ -364,4 +379,4 @@ const Assignments = () => {
     )
 }
 
-export default Assignments
+export default MyAssignments
