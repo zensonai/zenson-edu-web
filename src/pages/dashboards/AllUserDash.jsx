@@ -71,7 +71,7 @@ const AllUserDash = () => {
                 </div>
             </div>
 
-            <div className="lg:mt-4 flex">
+            <div className="mt-4 lg:flex ">
                 <div className="lg:w-1/2">
                     {
                         auth.role === 'institute_admin' ?

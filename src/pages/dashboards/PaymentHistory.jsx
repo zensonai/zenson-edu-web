@@ -32,108 +32,203 @@ const PaymentHistory = () => {
                 </p>
             </div>
 
-            <div className="w-full overflow-x-auto">
-                <table className="w-full min-w-[700px] text-left">
-                    <thead>
-                        <tr className="border-b border-slate-100 bg-slate-50">
-                            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500 sm:px-6">
-                                #
-                            </th>
-                            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
-                                Payment
-                            </th>
-                            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
-                                Amount
-                            </th>
-                            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
-                                Method
-                            </th>
-                            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500 sm:px-6">
-                                Date
-                            </th>
-                        </tr>
-                    </thead>
+            <div className="w-full">
+                <div className="hidden overflow-x-auto md:block">
+                    <table className="w-full text-left">
+                        <thead>
+                            <tr className="border-b border-slate-100 bg-slate-50">
+                                <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500 sm:px-6">
+                                    #
+                                </th>
+                                <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
+                                    Payment
+                                </th>
+                                <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
+                                    Amount
+                                </th>
+                                <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
+                                    Method
+                                </th>
+                                <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500">
+                                    Status
+                                </th>
+                                <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide text-slate-500 sm:px-6">
+                                    Date
+                                </th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        {payments.length > 0 ? (
-                            payments.slice(0, 4).map((payment, index) => {
-                                return (
-                                    <tr
-                                        key={payment._id || index}
-                                        className="border-b border-slate-100 last:border-0"
-                                    >
-                                        <td className="px-4 py-4 text-sm font-semibold text-slate-400 sm:px-6">
-                                            {index + 1}
-                                        </td>
+                        <tbody>
+                            {payments.length > 0 ? (
+                                payments.slice(0, 4).map((payment, index) => {
+                                    return (
+                                        <tr
+                                            key={payment._id || index}
+                                            className="border-b border-slate-100 last:border-0"
+                                        >
+                                            <td className="px-4 py-4 text-sm font-semibold text-slate-400 sm:px-6">
+                                                {index + 1}
+                                            </td>
 
-                                        <td className="px-4 py-4">
-                                            <div>
-                                                <p className="text-sm font-bold text-slate-800">
-                                                    {payment.payment_type || payment.type || 'Payment'}
-                                                </p>
-                                                <p className="mt-1 text-xs text-slate-400">
-                                                    {payment._id || '-'}
-                                                </p>
-                                            </div>
-                                        </td>
+                                            <td className="px-4 py-4">
+                                                <div>
+                                                    <p className="text-sm font-bold text-slate-800">
+                                                        {payment.payment_type || payment.type || 'Payment'}
+                                                    </p>
+                                                    <p className="mt-1 text-xs text-slate-400">
+                                                        {payment._id || '-'}
+                                                    </p>
+                                                </div>
+                                            </td>
 
-                                        <td className="px-4 py-4">
-                                            <span className="font-bold text-indigo-600">
-                                                {payment.amount ?? 0}
-                                            </span>
-                                        </td>
+                                            <td className="px-4 py-4">
+                                                <span className="font-bold text-indigo-600">
+                                                    {payment.amount ?? 0}
+                                                </span>
+                                            </td>
 
-                                        <td className="px-4 py-4 text-sm font-medium text-slate-600">
-                                            {payment.payment_method || payment.method || '-'}
-                                        </td>
+                                            <td className="px-4 py-4 text-sm font-medium text-slate-600">
+                                                {payment.payment_method || payment.method || '-'}
+                                            </td>
 
-                                        <td className="px-4 py-4">
-                                            <span className="inline-flex rounded-full bg-lime-50 px-3 py-1 text-xs font-bold text-lime-700">
-                                                {payment.transaction_status}
-                                            </span>
-                                        </td>
+                                            <td className="px-4 py-4">
+                                                <span className="inline-flex rounded-full bg-lime-50 px-3 py-1 text-xs font-bold text-lime-700">
+                                                    {payment.transaction_status}
+                                                </span>
+                                            </td>
 
-                                        <td className="px-4 py-4 text-sm font-medium text-slate-500 sm:px-6">
-                                            {payment.createdAt
-                                                ? new Date(payment.createdAt).toLocaleDateString('en-GB', {
-                                                    day: '2-digit',
-                                                    month: 'short',
-                                                    year: 'numeric',
-                                                })
-                                                : payment.created_at
-                                                    ? new Date(payment.created_at).toLocaleDateString('en-GB', {
+                                            <td className="px-4 py-4 text-sm font-medium text-slate-500 sm:px-6">
+                                                {payment.createdAt
+                                                    ? new Date(payment.createdAt).toLocaleDateString('en-GB', {
                                                         day: '2-digit',
                                                         month: 'short',
                                                         year: 'numeric',
                                                     })
-                                                    : '-'}
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        ) : (
-                            <tr>
-                                <td
-                                    colSpan="6"
-                                    className="px-4 py-12 text-center sm:px-6"
-                                >
-                                    <p className="text-sm font-semibold text-slate-500">
-                                        No payment history found
-                                    </p>
-                                    <p className="mt-1 text-xs text-slate-400">
-                                        Your payment records will appear here.
-                                    </p>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                                                    : payment.created_at
+                                                        ? new Date(payment.created_at).toLocaleDateString('en-GB', {
+                                                            day: '2-digit',
+                                                            month: 'short',
+                                                            year: 'numeric',
+                                                        })
+                                                        : '-'}
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            ) : (
+                                <tr>
+                                    <td
+                                        colSpan="6"
+                                        className="px-4 py-12 text-center sm:px-6"
+                                    >
+                                        <p className="text-sm font-semibold text-slate-500">
+                                            No payment history found
+                                        </p>
+                                        <p className="mt-1 text-xs text-slate-400">
+                                            Your payment records will appear here.
+                                        </p>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
 
-                <div className="border-t border-gray-200 text-center p-2">
-                    <a href="/dashboard/payments/view-my-payments" className='text-indigo-500 text-sm font-bold'>
+                <div className="block md:hidden">
+                    {payments.length > 0 ? (
+                        <div className="divide-y divide-slate-100">
+                            {payments.slice(0, 4).map((payment, index) => {
+                                return (
+                                    <div
+                                        key={payment._id || index}
+                                        className="p-4"
+                                    >
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="min-w-0">
+                                                <p className="text-sm font-bold text-slate-800">
+                                                    {payment.payment_type || payment.type || 'Payment'}
+                                                </p>
+
+                                                <p className="mt-1 truncate text-xs text-slate-400">
+                                                    {payment._id || '-'}
+                                                </p>
+                                            </div>
+
+                                            <span className="shrink-0 rounded-full bg-lime-50 px-3 py-1 text-xs font-bold text-lime-700">
+                                                {payment.transaction_status}
+                                            </span>
+                                        </div>
+
+                                        <div className="mt-4 grid grid-cols-2 gap-4">
+                                            <div>
+                                                <p className="text-xs font-medium text-slate-400">
+                                                    Amount
+                                                </p>
+                                                <p className="mt-1 text-sm font-bold text-indigo-600">
+                                                    {payment.amount ?? 0}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <p className="text-xs font-medium text-slate-400">
+                                                    Method
+                                                </p>
+                                                <p className="mt-1 truncate text-sm font-medium text-slate-600">
+                                                    {payment.payment_method || payment.method || '-'}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <p className="text-xs font-medium text-slate-400">
+                                                    Date
+                                                </p>
+                                                <p className="mt-1 text-sm font-medium text-slate-500">
+                                                    {payment.createdAt
+                                                        ? new Date(payment.createdAt).toLocaleDateString('en-GB', {
+                                                            day: '2-digit',
+                                                            month: 'short',
+                                                            year: 'numeric',
+                                                        })
+                                                        : payment.created_at
+                                                            ? new Date(payment.created_at).toLocaleDateString('en-GB', {
+                                                                day: '2-digit',
+                                                                month: 'short',
+                                                                year: 'numeric',
+                                                            })
+                                                            : '-'}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <p className="text-xs font-medium text-slate-400">
+                                                    #
+                                                </p>
+                                                <p className="mt-1 text-sm font-semibold text-slate-400">
+                                                    {index + 1}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : (
+                        <div className="px-4 py-12 text-center">
+                            <p className="text-sm font-semibold text-slate-500">
+                                No payment history found
+                            </p>
+                            <p className="mt-1 text-xs text-slate-400">
+                                Your payment records will appear here.
+                            </p>
+                        </div>
+                    )}
+                </div>
+
+                <div className="border-t border-gray-200 p-2 text-center">
+                    <a
+                        href="/dashboard/payments/view-my-payments"
+                        className="text-sm font-bold text-indigo-500"
+                    >
                         View More
                     </a>
                 </div>
