@@ -251,6 +251,26 @@ export const instituteAdmin = [
     //         },
     //     ],
     // },
+
+    {
+        section: "Payments",
+        items: [
+            {
+                name: "Payments",
+                icon: <BsCashCoin />,
+                submenu: [
+                    {
+                        name: "Create Payment",
+                        link: "/dashboard/payments/create-payment",
+                    },
+                    {
+                        name: "View Transactions",
+                        link: "/dashboard/payments/view-my-payments",
+                    },
+                ],
+            },
+        ],
+    },
     {
         section: "Institute Settings",
         items: [

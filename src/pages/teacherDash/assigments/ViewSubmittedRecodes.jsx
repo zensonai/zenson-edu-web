@@ -323,6 +323,10 @@ const ViewSubmittedRecodes = ({
                                             Marks
                                         </th>
 
+                                        <th className="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                            Current Marks
+                                        </th>
+
                                         <th className="px-5 py-4 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">
                                             Answer Sheet
                                         </th>
@@ -426,6 +430,11 @@ const ViewSubmittedRecodes = ({
                                                         —
                                                     </span>
                                                 )}
+                                            </td>
+                                            <td className="px-5 py-4">
+                                                {student.submission?.marks !== undefined && student.submission?.marks !== null
+                                                    ? student.submission.marks
+                                                    : '—'}
                                             </td>
 
                                             <td className="px-5 py-4">

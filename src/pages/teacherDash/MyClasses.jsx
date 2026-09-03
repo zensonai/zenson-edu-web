@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import API from '../../services/api'
 import DefaultButton from '../../component/Buttons/DefaultButton'
+import { useAuth } from '../../context/AuthContext'
 
 const MyClasses = () => {
     const token = localStorage.getItem('access_token')
-
     const [classes, setClasses] = useState([])
 
     useEffect(() => {
