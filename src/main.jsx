@@ -7,6 +7,7 @@ import { RoleProvider } from './context/RoleContext.jsx'
 import AppRouter from './router/index.jsx'
 import 'leaflet/dist/leaflet.css';
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
